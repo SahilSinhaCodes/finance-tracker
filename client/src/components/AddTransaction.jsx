@@ -32,11 +32,14 @@ const AddTransaction = ({ onAdd }) => {
         'http://localhost:5000/api/transactions',
         formData,
         {
-          headers: { Authorization: token },
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`, // ✅ Fix here
+          },
         }
       );
       alert('Transaction added!');
-      onAdd(res.data);  // pass new transaction to parent to update list
+      onAdd(res.data);
       setFormData({ type: 'income', amount: '', category: '', description: '', date: '' });
     } catch (error) {
       console.error(error);

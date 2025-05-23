@@ -1,8 +1,8 @@
 // src/pages/Login.jsx
 import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-
+import toast from 'react-hot-toast';
 
 const Login = () => {
   const { login } = useContext(AuthContext);
@@ -27,10 +27,10 @@ const Login = () => {
       if (!res.ok) throw new Error(data.message || 'Login failed');
 
       login(data.user, data.token);
-
-      // Redirect to home page or dashboard after login
+      toast.success('Logged in successfully!');
       navigate('/');
     } catch (err) {
+      toast.error(err.message || 'Login failed');
       setError(err.message);
     }
   };
@@ -61,6 +61,13 @@ const Login = () => {
         </button>
         {error && <p className="text-red-600">{error}</p>}
       </form>
+
+      <p className="mt-4 text-sm text-center">
+        Don’t have an account?{' '}
+        <Link to="/register" className="text-blue-600 underline">
+          Register here
+        </Link>
+      </p>
     </div>
   );
 };

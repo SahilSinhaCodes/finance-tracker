@@ -38,7 +38,7 @@ const AddTransaction = ({ onAdd }) => {
           },
         }
       );
-      alert('Transaction added!');
+//      alert('Transaction added!');
       onAdd(res.data);
       setFormData({ type: 'income', amount: '', category: '', description: '', date: '' });
     } catch (error) {

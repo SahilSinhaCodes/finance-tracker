@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import { AuthProvider, AuthContext } from './context/AuthContext';
 import Transactions from './pages/Transactions';
+import Navbar from './components/Navbar';
 
 const ProtectedRoute = ({ children }) => {
   const { token, loading } = React.useContext(AuthContext);

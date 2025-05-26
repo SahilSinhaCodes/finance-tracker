@@ -5,9 +5,11 @@ import AddTransaction from '../components/AddTransaction';
 import TransactionFilters from '../components/TransactionFilters';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import Navbar from '../components/Navbar';
+import { generatePDF } from '../utils/generatePDF';
 
 const Transactions = () => {
-  const { token, logout } = useContext(AuthContext);
+  const { token, logout, user } = useContext(AuthContext);
   const [transactions, setTransactions] = useState([]);
   const [filterType, setFilterType] = useState('all');
   const [filterCategory, setFilterCategory] = useState('');
@@ -56,14 +58,6 @@ const Transactions = () => {
     }
   };
 
-  const handleLogout = () => {
-    logout();
-    toast.success('Logged out successfully');
-    setTimeout(() => {
-      navigate('/login');
-    }, 100);
-  };
-
   // Filtering logic
   const filteredTransactions = transactions.filter((t) => {
     const matchType = filterType === 'all' || t.type === filterType;
@@ -77,87 +71,87 @@ const Transactions = () => {
     return matchType && matchCategory && matchDate;
   });
 
+  console.log("User object from context:", user);
+
   return (
-    <div className="p-4 sm:p-6">
-      {/* Header with Back and Logout buttons */}
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
-        <button
-          onClick={() => navigate('/')}
-          className="bg-gray-500 hover:bg-gray-600 text-white text-sm sm:text-base px-3 sm:px-4 py-1.5 sm:py-2 rounded"
-        >
-          ← Back to Dashboard
-        </button>
+    <div>
+      <Navbar />
+      <div className="p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+          <h1 className="text-2xl sm:text-3xl font-bold text-center sm:text-left">
+            Manage Transactions
+          </h1>
+        </div>
 
-        <h1 className="text-2xl sm:text-3xl font-bold text-center sm:text-left">
-          Manage Transactions
-        </h1>
+        {/* Add Transaction */}
+        <div className="my-6">
+          <h2 className="text-xl font-semibold mb-2">Add New Transaction</h2>
+          <AddTransaction onAdd={handleAddTransaction} />
+        </div>
 
-        <button
-          onClick={handleLogout}
-          className="bg-red-500 hover:bg-red-600 text-white text-sm sm:text-base px-3 sm:px-4 py-1.5 sm:py-2 rounded"
-        >
-          Log Out
-        </button>
-      </div>
+        {/* Filters */}
+        <div className="my-6">
+          <h2 className="text-xl font-semibold mb-2">Filters</h2>
+          <TransactionFilters
+            filterType={filterType}
+            filterCategory={filterCategory}
+            filterDate={filterDate}
+            setFilterType={setFilterType}
+            setFilterCategory={setFilterCategory}
+            setFilterDate={setFilterDate}
+          />
+        </div>
 
-      {/* Add Transaction */}
-      <div className="my-6">
-        <h2 className="text-xl font-semibold mb-2">Add New Transaction</h2>
-        <AddTransaction onAdd={handleAddTransaction} />
-      </div>
+        {/* Download Statement */}
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={() => generatePDF(filteredTransactions, user?.name || 'Unknown User')}
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          >
+            Download Statement
+          </button>
+        </div>
 
-      {/* Filters */}
-      <div className="my-6">
-        <h2 className="text-xl font-semibold mb-2">Filters</h2>
-        <TransactionFilters
-          filterType={filterType}
-          filterCategory={filterCategory}
-          filterDate={filterDate}
-          setFilterType={setFilterType}
-          setFilterCategory={setFilterCategory}
-          setFilterDate={setFilterDate}
-        />
-      </div>
-
-      {/* Transactions List */}
-      <div className="my-6">
-        <h2 className="text-xl font-semibold mb-2">Transaction List</h2>
-        <ul className="space-y-4">
-          {filteredTransactions.length === 0 ? (
-            <p>No transactions match the filter.</p>
-          ) : (
-            filteredTransactions.map((t) => (
-              <li key={t._id} className="border p-3 rounded">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <p>
-                      <strong>{t.type.toUpperCase()}</strong> –{' '}
-                      {new Intl.NumberFormat('en-IN', {
-                        style: 'currency',
-                        currency: 'INR',
-                      }).format(t.amount)}{' '}
-                      – {t.category}
-                    </p>
-                    <p>{t.description}</p>
-                    <p className="text-sm text-gray-600">
-                      {new Intl.DateTimeFormat('en-IN', {
-                        day: '2-digit',
-                        month: 'short',
-                        year: 'numeric',
-                      }).format(new Date(t.date))}
-                    </p>
+        {/* Transactions List */}
+        <div className="my-6">
+          <h2 className="text-xl font-semibold mb-2">Transaction List</h2>
+          <ul className="space-y-4">
+            {filteredTransactions.length === 0 ? (
+              <p>No transactions match the filter.</p>
+            ) : (
+              filteredTransactions.map((t) => (
+                <li key={t._id} className="border p-3 rounded">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p>
+                        <strong>{t.type.toUpperCase()}</strong> –{' '}
+                        {new Intl.NumberFormat('en-IN', {
+                          style: 'currency',
+                          currency: 'INR',
+                        }).format(t.amount)}{' '}
+                        – {t.category}
+                      </p>
+                      <p>{t.description}</p>
+                      <p className="text-sm text-gray-600">
+                        {new Intl.DateTimeFormat('en-IN', {
+                          day: '2-digit',
+                          month: 'short',
+                          year: 'numeric',
+                        }).format(new Date(t.date))}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => handleDelete(t._id)}
+                      className="text-red-600 hover:underline text-sm"
+                    >
+                      Delete
+                    </button>
                   </div>
-                  <button
-                    onClick={() => handleDelete(t._id)}
-                    className="text-red-600 hover:underline text-sm"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </li>
-            ))
-          )}
-        </ul>
+                </li>
+              ))
+            )}
+          </ul>
+        </div>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import StatCard from '../components/StatCard';
 import Charts from '../components/Charts';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 const Home = () => {
   const { token, logout, user } = useContext(AuthContext); // add `user`
@@ -49,14 +50,16 @@ const Home = () => {
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, 5);
 
-  const handleLogout = () => {
-    logout();
-    setTimeout(() => {
-      navigate('/login');
-    }, 100);
-  };
+//  const handleLogout = () => {
+//    logout();
+//    setTimeout(() => {
+//      navigate('/login');
+//    }, 100);
+//  };
 
   return (
+    <div>
+      <Navbar />
     <div className="p-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-2">
@@ -67,20 +70,6 @@ const Home = () => {
               Welcome back, {user.name.split(' ')[0]} 👋
             </p>
           )}
-        </div>
-        <div className="flex gap-2">
-          <button
-            onClick={() => navigate('/transactions')}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-          >
-            Manage Transactions
-          </button>
-          <button
-            onClick={handleLogout}
-            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
-          >
-            Log Out
-          </button>
         </div>
       </div>
 
@@ -150,6 +139,7 @@ const Home = () => {
 </ul>
         )}
       </div>
+    </div>
     </div>
   );
 

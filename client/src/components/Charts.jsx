@@ -50,7 +50,9 @@ const Charts = ({ transactions }) => {
     <div className="grid md:grid-cols-2 gap-8 mt-8">
       {/* -------- PIE CHART -------- */}
       <div>
-        <h2 className="text-xl font-semibold mb-2">Expenses by Category</h2>
+        <h2 className="text-2xl font-bold text-gray-700 tracking-wide mb-4">
+          🧾 Expenses by Category
+        </h2>
         {pieData.length === 0 ? (
           <p>No expenses to display</p>
         ) : (
@@ -78,7 +80,10 @@ const Charts = ({ transactions }) => {
 
       {/* -------- BAR CHART -------- */}
       <div>
-        <h2 className="text-xl font-semibold mb-2">Monthly Income vs Expense</h2>
+        <h2 className="text-2xl font-bold text-gray-700 tracking-wide mb-4">
+          📈 Monthly Income vs Expense
+        </h2>
+        
         {barData.length === 0 ? (
           <p>No data available</p>
         ) : (

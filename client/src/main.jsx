@@ -21,6 +21,7 @@ const ProtectedRoute = ({ children }) => {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <AuthProvider>
+
     <BrowserRouter>
       {/* Add Toaster once here at top-level */}
       <Toaster position="top-right" reverseOrder={false} />
@@ -42,5 +43,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/transactions" element={<Transactions />} />
       </Routes>
     </BrowserRouter>
+
   </AuthProvider>
 );

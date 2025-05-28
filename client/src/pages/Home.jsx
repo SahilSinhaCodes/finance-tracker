@@ -64,11 +64,14 @@ const Home = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-2">
         <div>
-          <h1 className="text-3xl font-bold">Dashboard</h1>
+          <h1 className="text-4xl font-extrabold text-gray-800 tracking-tight">
+            Dashboard
+          </h1>
           {user?.name && (
-            <p className="text-gray-700 text-sm">
-              Welcome back, {user.name.split(' ')[0]} 👋
+            <p className="text-lg sm:text-xl font-semibold text-gray-800 mt-1">
+               Welcome <span className="text-blue-600">{user.name.split(' ')[0]}</span>! 👋
             </p>
+
           )}
         </div>
       </div>
@@ -103,40 +106,54 @@ const Home = () => {
 
       {/* Charts */}
       <div className="my-6 px-2 sm:px-0">
-        <h2 className="text-xl sm:text-2xl font-semibold mb-2">Insights</h2>
+        <h2 className="text-2xl font-bold text-gray-700 mb-4 tracking-wide">
+          📊 Insights Overview
+        </h2>
         <Charts transactions={transactions} />
       </div>
 
       {/* Recent Transactions */}
       <div className="my-6">
-        <h2 className="text-xl font-semibold mb-2">Recent Transactions</h2>
+        <h2 className="text-2xl font-bold text-gray-700 mb-4 tracking-wide">
+          💰 Recent Transactions
+        </h2>
         {recentTransactions.length === 0 ? (
           <p>No recent transactions.</p>
         ) : (
-          <ul className="space-y-4">
-  {recentTransactions.map((t) => (
-    <li key={t._id} className="border p-3 rounded text-sm sm:text-base">
-      <div>
-        <p className="font-medium">
-          <strong>{t.type.toUpperCase()}</strong> –{' '}
-          {new Intl.NumberFormat('en-IN', {
-            style: 'currency',
-            currency: 'INR',
-          }).format(t.amount)}{' '}
-          – {t.category}
-        </p>
-        <p>{t.description}</p>
-        <p className="text-xs text-gray-600 sm:text-sm">
-          {new Intl.DateTimeFormat('en-IN', {
-            day: '2-digit',
-            month: 'short',
-            year: 'numeric',
-          }).format(new Date(t.date))}
-        </p>
-      </div>
-    </li>
-  ))}
-</ul>
+          <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {recentTransactions.map((t) => (
+              <li
+                key={t._id}
+                className={`rounded-xl p-4 shadow-sm border border-gray-200 hover:shadow-md transition ${
+                  t.type === 'income' ? 'bg-green-50' : 'bg-red-50'
+                }`}
+              >
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm font-semibold uppercase tracking-wide text-gray-700">
+                    {t.type}
+                  </span>
+                  <span className="text-sm text-gray-500">
+                    {new Intl.DateTimeFormat('en-IN', {
+                      day: '2-digit',
+                      month: 'short',
+                      year: 'numeric',
+                    }).format(new Date(t.date))}
+                  </span>
+                </div>
+                <p className="text-base font-medium text-gray-800">
+                  {new Intl.NumberFormat('en-IN', {
+                    style: 'currency',
+                    currency: 'INR',
+                  }).format(t.amount)}
+                </p>
+                <p className="text-sm text-gray-600 italic">{t.category}</p>
+                {t.description && (
+                  <p className="text-sm text-gray-700 mt-1">{t.description}</p>
+                )}
+              </li>
+            ))}
+          </ul>
+
         )}
       </div>
     </div>

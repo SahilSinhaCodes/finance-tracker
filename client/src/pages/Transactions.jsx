@@ -78,20 +78,24 @@ const Transactions = () => {
       <Navbar />
       <div className="p-4 sm:p-6">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-center sm:text-left">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-800 text-center sm:text-left mb-2">
             Manage Transactions
           </h1>
         </div>
 
         {/* Add Transaction */}
         <div className="my-6">
-          <h2 className="text-xl font-semibold mb-2">Add New Transaction</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-3">
+            Add New Transaction
+          </h2>
           <AddTransaction onAdd={handleAddTransaction} />
         </div>
 
         {/* Filters */}
         <div className="my-6">
-          <h2 className="text-xl font-semibold mb-2">Filters</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-3">
+            Filters
+          </h2>
           <TransactionFilters
             filterType={filterType}
             filterCategory={filterCategory}
@@ -113,45 +117,59 @@ const Transactions = () => {
         </div>
 
         {/* Transactions List */}
+        {/* Transactions List */}
         <div className="my-6">
-          <h2 className="text-xl font-semibold mb-2">Transaction List</h2>
-          <ul className="space-y-4">
-            {filteredTransactions.length === 0 ? (
-              <p>No transactions match the filter.</p>
-            ) : (
-              filteredTransactions.map((t) => (
-                <li key={t._id} className="border p-3 rounded">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p>
-                        <strong>{t.type.toUpperCase()}</strong> –{' '}
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            Transaction List
+          </h2>
+          {filteredTransactions.length === 0 ? (
+            <p className="text-gray-500">No transactions match the filter.</p>
+          ) : (
+            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredTransactions.map((t) => (
+                <li
+                  key={t._id}
+                  className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <span
+                        className={`text-lg font-semibold ${
+                          t.type === 'income' ? 'text-green-600' : 'text-red-500'
+                        }`}
+                      >
+                        {t.type === 'income' ? '+' : '-'}
                         {new Intl.NumberFormat('en-IN', {
                           style: 'currency',
                           currency: 'INR',
-                        }).format(t.amount)}{' '}
-                        – {t.category}
-                      </p>
-                      <p>{t.description}</p>
-                      <p className="text-sm text-gray-600">
-                        {new Intl.DateTimeFormat('en-IN', {
-                          day: '2-digit',
-                          month: 'short',
-                          year: 'numeric',
-                        }).format(new Date(t.date))}
-                      </p>
+                        }).format(t.amount)}
+                      </span>
+                      <span className="text-sm bg-gray-100 text-gray-700 px-2 py-1 rounded">
+                        {t.category}
+                      </span>
                     </div>
-                    <button
-                      onClick={() => handleDelete(t._id)}
-                      className="text-red-600 hover:underline text-sm"
-                    >
-                      Delete
-                    </button>
+                    <p className="text-gray-800 text-sm mb-1">{t.description}</p>
+                    <p className="text-xs text-gray-500">
+                      {new Intl.DateTimeFormat('en-IN', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric',
+                      }).format(new Date(t.date))}
+                    </p>
                   </div>
+
+                  <button
+                    onClick={() => handleDelete(t._id)}
+                    className="text-sm text-red-600 hover:underline mt-3 self-end"
+                  >
+                    Delete
+                  </button>
                 </li>
-              ))
-            )}
-          </ul>
+              ))}
+            </ul>
+          )}
         </div>
+
       </div>
     </div>
   );

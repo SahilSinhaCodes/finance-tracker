@@ -2,13 +2,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { Menu, X } from 'lucide-react'; // Install lucide-react or use Heroicons
+import { Moon, Sun } from 'lucide-react'; // icons
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { logout } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
-
   const isHome = location.pathname === '/';
 
   const handleLogout = () => {
@@ -40,6 +40,7 @@ const Navbar = () => {
               Dashboard
             </button>
           )}
+
           <button
             onClick={handleLogout}
             className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded text-sm"

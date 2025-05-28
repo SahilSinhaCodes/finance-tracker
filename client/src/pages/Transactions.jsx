@@ -7,7 +7,12 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Navbar from '../components/Navbar';
 import { generatePDF } from '../utils/generatePDF';
-
+import {
+  FileText,
+  PlusCircle,
+  Filter,
+  ListOrdered,
+} from 'lucide-react';
 const Transactions = () => {
   const { token, logout, user } = useContext(AuthContext);
   const [transactions, setTransactions] = useState([]);
@@ -78,24 +83,29 @@ const Transactions = () => {
       <Navbar />
       <div className="p-4 sm:p-6">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-800 text-center sm:text-left mb-2">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-800 flex items-center gap-2 mb-2">
+            <FileText className="w-6 h-6 text-green-600" />
             Manage Transactions
           </h1>
         </div>
 
         {/* Add Transaction */}
         <div className="my-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-3">
+          <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2 mb-3">
+            <PlusCircle className="w-5 h-5 text-blue-600" />
             Add New Transaction
           </h2>
+
           <AddTransaction onAdd={handleAddTransaction} />
         </div>
 
         {/* Filters */}
         <div className="my-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-3">
+          <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2 mb-3">
+            <Filter className="w-5 h-5 text-purple-600" />
             Filters
           </h2>
+
           <TransactionFilters
             filterType={filterType}
             filterCategory={filterCategory}
@@ -119,9 +129,11 @@ const Transactions = () => {
         {/* Transactions List */}
         {/* Transactions List */}
         <div className="my-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+          <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2 mb-4">
+            <ListOrdered className="w-5 h-5 text-yellow-600" />
             Transaction List
           </h2>
+          
           {filteredTransactions.length === 0 ? (
             <p className="text-gray-500">No transactions match the filter.</p>
           ) : (

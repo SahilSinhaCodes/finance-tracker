@@ -4,7 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import StatCard from '../components/StatCard';
 import Charts from '../components/Charts';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/NavBar.jsx';
 
 const Home = () => {
   const { token, logout, user } = useContext(AuthContext);

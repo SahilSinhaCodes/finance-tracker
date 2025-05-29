@@ -5,7 +5,7 @@ import AddTransaction from '../components/AddTransaction';
 import TransactionFilters from '../components/TransactionFilters';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import Navbar from '../components/Navbar.jsx';
+import Navbar from '../components/NavBar.jsx';
 import { generatePDF } from '../utils/generatePDF';
 import {
   FileText,

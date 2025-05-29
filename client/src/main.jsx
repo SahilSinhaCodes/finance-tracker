@@ -3,13 +3,11 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';  // <-- Import Toaster here
 import './index.css';
-
 import App from './App';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import { AuthProvider, AuthContext } from './context/AuthContext';
 import Transactions from './pages/Transactions';
-import Navbar from './components/Navbar';
 
 const ProtectedRoute = ({ children }) => {
   const { token, loading } = React.useContext(AuthContext);

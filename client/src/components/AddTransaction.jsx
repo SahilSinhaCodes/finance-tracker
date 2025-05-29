@@ -3,7 +3,7 @@ import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 
 const AddTransaction = ({ onAdd }) => {
-  const { user, token } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     type: 'income',

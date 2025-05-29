@@ -13,7 +13,7 @@ const Home = () => {
 
   const fetchTransactions = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/transactions', {
+      const res = await axios.get('https://finance-tracker-api-uhav.onrender.com/api/transactions', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTransactions(res.data);

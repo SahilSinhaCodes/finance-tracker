@@ -23,7 +23,7 @@ const Transactions = () => {
 
   const fetchTransactions = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/transactions', {
+      const res = await axios.get('https://finance-tracker-api-uhav.onrender.com/api/transactions', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTransactions(res.data);
@@ -52,7 +52,7 @@ const Transactions = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/transactions/${id}`, {
+      await axios.delete(`https://finance-tracker-api-uhav.onrender.com/api/transactions/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTransactions((prev) => prev.filter((t) => t._id !== id));

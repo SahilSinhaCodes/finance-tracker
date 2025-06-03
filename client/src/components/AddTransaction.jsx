@@ -16,8 +16,17 @@ const AddTransaction = ({ onAdd }) => {
   const { type, amount, category, description, date } = formData;
 
   const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+
+    // Allow alphabets, spaces, commas, and ampersands in category
+    if (name === 'category') {
+      const validCategory = /^[A-Za-z\s,&]*$/;
+      if (!validCategory.test(value)) return;
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

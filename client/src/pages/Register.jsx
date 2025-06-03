@@ -25,12 +25,17 @@ const Register = () => {
       if (!res.ok) throw new Error(data.message || 'Registration failed');
 
       toast.success('Registration successful!');
-      navigate('/login'); // Redirect to login page after success
+      navigate('/login');
     } catch (err) {
-      setError(err.message);
-      toast.error(err.message);
+      const msg = err.message.includes('E11000') || err.message.includes('duplicate')
+        ? 'Email already registered'
+        : err.message;
+
+      setError(msg);
+      toast.error(msg);
     }
   };
+
 
   return (
     <div className="max-w-md mx-auto p-4">

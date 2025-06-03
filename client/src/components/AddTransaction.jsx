@@ -16,17 +16,8 @@ const AddTransaction = ({ onAdd }) => {
   const { type, amount, category, description, date } = formData;
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    // Allow alphabets, spaces, commas, and ampersands in category
-    if (name === 'category') {
-      const validCategory = /^[A-Za-z\s,&]*$/;
-      if (!validCategory.test(value)) return;
-    }
-
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,14 +72,20 @@ const AddTransaction = ({ onAdd }) => {
       <div>
         <label className="block mb-1">Category *</label>
         <input
-          type="text"
-          name="category"
-          value={category}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border rounded"
-          placeholder="e.g., Food, Salary"
-        />
+  type="text"
+  name="category"
+  value={category}
+  onChange={handleChange}
+  onKeyDown={(e) => {
+    // Block number keys (top row and numpad)
+    if (e.key >= '0' && e.key <= '9') {
+      e.preventDefault();
+    }
+  }}
+  required
+  className="w-full p-2 border rounded"
+  placeholder="e.g., Food, Salary"
+/>
       </div>
 
       <div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';  // <-- Import Toaster here
+import { Toaster } from 'react-hot-toast';  
 import './index.css';
 import App from './App';
 import Register from './pages/Register';
@@ -21,11 +21,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <AuthProvider>
 
     <BrowserRouter>
-      {/* Add Toaster once here at top-level */}
+      
       <Toaster position="top-right" reverseOrder={false} />
 
       <Routes>
-        {/* Protected app (Home page inside App.jsx) */}
+        
         <Route
           path="/"
           element={

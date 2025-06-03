@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { Menu, X } from 'lucide-react'; // Install lucide-react or use Heroicons
+import { Menu, X } from 'lucide-react'; 
 
 
 const Navbar = () => {

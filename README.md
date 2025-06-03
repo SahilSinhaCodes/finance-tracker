@@ -24,7 +24,7 @@ Built with **React**, **Node.js**, **Express**, and **MongoDB**.
 | Database   | MongoDB + Mongoose          | Store user profiles & transactions|
 | Charts     | Recharts / Chart.js         | Visualize financial data          |
 | Auth       | JWT                         | Secure user authentication        |
-| Deployment | Vercel (client), Render/Railway (server) | Live production |
+| Deployment | Vercel (client), Render (server) | Live production |
 
 ---
 

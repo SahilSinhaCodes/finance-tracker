@@ -14,6 +14,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
     try {
       const res = await fetch('https://finance-tracker-api-uhav.onrender.com/api/auth/register', {
         method: 'POST',
@@ -22,19 +23,25 @@ const Register = () => {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || 'Registration failed');
+
+      if (!res.ok) {
+        // Use the backend message directly (from res.json)
+        const msg = data.message || 'Registration failed';
+        setError(msg);
+        toast.error(msg);
+        return; // Exit early
+      }
 
       toast.success('Registration successful!');
       navigate('/login');
     } catch (err) {
-      const msg = err.message.includes('E11000') || err.message.includes('duplicate')
-        ? 'Email already registered'
-        : err.message;
-
+      console.error('Network or unexpected error:', err);
+      const msg = 'Something went wrong. Please try again later.';
       setError(msg);
       toast.error(msg);
     }
   };
+
 
 
   return (
